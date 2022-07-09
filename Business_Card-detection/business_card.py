@@ -17,7 +17,9 @@ r=1000.0/img_h
 img_resize=cv2.resize(img,(int(r*img_w),1000))
 img_gray=cv2.cvtColor(img_resize,cv2.COLOR_BGR2GRAY)
 
-#cv2.imshow("img",img_resize)
+# 1-------------------------------------------------
+cv2.imshow("Original_img",img_resize)
+cv2.imwrite("C:/Users/hyebin/PycharmProjects/OpenCV_Project/Business_Card-detection/result_img/Original_img.jpg",img_resize)
 
 blur=cv2.GaussianBlur(img_gray,(9,9),0)
 edge=cv2.Canny(blur,100,10)
@@ -34,6 +36,11 @@ for cont in contours:
             c_x = int(c[0][0])
             c_y = int(c[0][1])
             cv2.circle(img_copy, (c_x, c_y), 15, color[ind], -1)
+            # 2-------------------------------------------------
+            cv2.imshow("circle", img_copy)
+            cv2.imwrite(
+                "C:/Users/hyebin/PycharmProjects/OpenCV_Project/Business_Card-detection/result_img/circle_img.jpg",
+                img_copy)
 
         left_1,  top_1 = approx[0][0][0], approx[0][0][1]
         left_2, bottom_1 = approx[1][0][0], approx[1][0][1]
@@ -44,6 +51,11 @@ for cont in contours:
         cv2.line(img_copy, (int(right_1), int(bottom_2)), (int(left_2), int(bottom_1)), (255, 255, 102), 3)
         cv2.line(img_copy, (int(left_2), int(bottom_1)), (int(left_1), int(top_1)), (0, 51, 255), 3)
 
+        # 3-------------------------------------------------
+        cv2.imshow("line", img_copy)
+        cv2.imwrite(
+            "C:/Users/hyebin/PycharmProjects/OpenCV_Project/Business_Card-detection/result_img/line_img.jpg",
+            img_copy)
 
 left_top = [approx[0][0][0], approx[0][0][1]]
 left_bottom=[approx[1][0][0], approx[1][0][1]]
@@ -65,19 +77,22 @@ M=cv2.getPerspectiveTransform(pts1,pts2)
 
 wrap=cv2.warpPerspective(img_copy,M,(int(minW),int(minH)))
 
+# 4-------------------------------------------------
 cv2.imshow("wrap",wrap)
+cv2.imwrite("C:/Users/hyebin/PycharmProjects/OpenCV_Project/Business_Card-detection/result_img/wrap_img.jpg",wrap)
 
 warped = cv2.cvtColor(wrap, cv2.COLOR_BGR2GRAY)
 th3 = cv2.adaptiveThreshold(warped, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 9, 5)
 
-with open("C:/Users/hyebin/PycharmProjects/OpenCV_Project/Business_Card-detection/result_txt/1.txt","w") as f:
-    text = pytesseract.image_to_string(th3)
-    f.write(text)
+# 5-------------------------------------------------
+cv2.imshow("adaptive_threshold",th3)
+cv2.imwrite("C:/Users/hyebin/PycharmProjects/OpenCV_Project/Business_Card-detection/result_img/adaptive_threshold_img.jpg",th3)
 
-print(text.strip())
+#with open("C:/Users/hyebin/PycharmProjects/OpenCV_Project/Business_Card-detection/result_txt/1.txt","w") as f:
+#    text = pytesseract.image_to_string(th3)
+#    f.write(text)
 
-
-cv2.imshow("warped",th3)
+#print(text.strip())
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
