@@ -1,10 +1,9 @@
 # OpenCV_Project
 
 
-### Output video Example
-| Original_img |
-| :------------------------------------------: | 
-| <img width="50%" src="https://github.com/HyeBin-Hub/OpenCV_Project/blob/master/Business_Card-detection/result_img/Original_img.jpg"/> |
+### Business_Card-detection Example
+#### < Original_img > 
+<img width="30%" src="https://github.com/HyeBin-Hub/OpenCV_Project/blob/master/Business_Card-detection/result_img/Original_img.jpg"/> 
 
 
 | circle_img | line_img | wrap_img | adaptive_threshold_img |
